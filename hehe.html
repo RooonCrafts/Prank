@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prank Website</title>
+</head>
+<body>
+    <h1>Welcome to the Prank Website!</h1>
+    <p>Enjoy the surprise... 😈</p>
+
+    <script>
+        // Function to check and request notification permission
+        function askForNotificationPermission() {
+            if (Notification.permission !== "granted") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        startPrank();
+                    } else {
+                        alert("Please allow notifications to enjoy the prank!");
+                    }
+                });
+            } else {
+                startPrank();
+            }
+        }
+
+        // Prank function that sends notifications every 10 seconds
+        function startPrank() {
+            setInterval(() => {
+                new Notification("SURPRISE!", {
+                    body: "This is your 10-second prank notification! 😂",
+                    icon: "https://example.com/icon.png" // You can replace with your icon
+                });
+            }, 10000); // 10 seconds
+        }
+
+        // Run the function to ask for permission
+        askForNotificationPermission();
+    </script>
+</body>
+</html>
