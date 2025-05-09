@@ -1,42 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prank Website</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RooonCrafts Navbar</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #f0f0f0;
+      font-family: sans-serif;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 60px;
+      background-color: #000;
+      padding: 0 20px;
+    }
+
+    .branding {
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .nav-items {
+      display: flex;
+      height: 100%;
+    }
+
+    .nav-item {
+      position: relative;
+      color: #fff;
+      text-decoration: none;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      cursor: pointer;
+      transition: background 0.3s;
+      overflow: hidden;
+    }
+
+    .nav-item:hover {
+      background-color: #444;
+    }
+
+    .nav-item.selected {
+      background-color: #222; /* Darker selected background */
+    }
+
+    .nav-item.selected::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent 40%, rgba(255, 255, 255, 0.3) 50%, transparent 60%);
+      animation: sweep 1.8s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes sweep {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    main {
+      padding: 30px;
+      background-color: #fff;
+      color: #333;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1rem;
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
-    <h1>Welcome to the Prank Website!</h1>
-    <p>Enjoy the surprise... 😈</p>
+  <nav class="navbar">
+    <div class="branding">RooonCrafts</div>
+    <div class="nav-items">
+      <a class="nav-item selected" data-page="home">Home</a>
+      <a class="nav-item" data-page="about">About</a>
+      <a class="nav-item" data-page="services">Services</a>
+      <a class="nav-item" data-page="contact">Contact</a>
+    </div>
+  </nav>
 
-    <script>
-        // Function to check and request notification permission
-        function askForNotificationPermission() {
-            if (Notification.permission !== "granted") {
-                Notification.requestPermission().then(permission => {
-                    if (permission === "granted") {
-                        startPrank();
-                    } else {
-                        alert("Please allow notifications to enjoy the prank!");
-                    }
-                });
-            } else {
-                startPrank();
-            }
+  <main id="main-content">
+    <h1>Welcome to RooonCrafts</h1>
+    <p>We don’t just build websites. We shape experiences, craft identities, and bring bold ideas to life. Whether you’re here to browse, build, or be inspired — you’re in the right place.</p>
+  </main>
+
+  <script>
+    const navItems = document.querySelectorAll('.nav-item');
+    const mainContent = document.getElementById('main-content');
+
+    const pages = {
+      home: {
+        title: 'Welcome to RooonCrafts',
+        content: 'We don’t just build websites. We shape experiences, craft identities, and bring bold ideas to life. Whether you’re here to browse, build, or be inspired — you’re in the right place.'
+      },
+      about: {
+        title: 'About RooonCrafts',
+        content: 'RooonCrafts isn’t just a name — it’s a vision. An independent creative organization, born from curiosity, sharpened by passion, and driven by a single goal: to build digital experiences that leave a mark. We design. We develop. We craft ideas into reality — with precision and imagination. We don’t need to follow trends, for ideas that speak for themselves. Welcome to RooonCrafts. Beyond the rest, we build the best.'
+      },
+      services: {
+        title: 'Our Services',
+        content: 'From web design to development, we offer solutions tailored to your vibe. Need a stunning portfolio? We got you.'
+      },
+      contact: {
+        title: 'Get in Touch',
+        content: 'Wanna chat? Reach out to us via email, socials, or carrier pigeon. Just don’t ghost us!'
+      }
+    };
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelector('.nav-item.selected')?.classList.remove('selected');
+        item.classList.add('selected');
+
+        const page = item.dataset.page;
+        const pageData = pages[page];
+
+        if (pageData) {
+          mainContent.innerHTML = `
+            <h1>${pageData.title}</h1>
+            <p>${pageData.content}</p>
+          `;
         }
-
-        // Prank function that sends notifications every 10 seconds
-        function startPrank() {
-            setInterval(() => {
-                new Notification("SURPRISE!", {
-                    body: "This is your 10-second prank notification! 😂",
-                    icon: "https://example.com/icon.png" // You can replace with your icon
-                });
-            }, 10000); // 10 seconds
-        }
-
-        // Run the function to ask for permission
-        askForNotificationPermission();
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>
